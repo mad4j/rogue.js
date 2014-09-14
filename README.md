@@ -3,6 +3,8 @@ rogue.js
 
 JavaScript porting of original Rogue source code using Emscripten.
 
+![Rogue](http://en.wikipedia.org/wiki/File:Rogue_Screen_Shot_CAR.PNG)
+
 ### TODO
 - [ ] Create GitHub project repository
 - [ ] Porting of PDCurses
