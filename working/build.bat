@@ -34,7 +34,7 @@ CMD /C emcc -O2 %PDCURSES_BINARIES% -o lib\pdcurses.o
 
 ECHO.
 ECHO BUILDING sdl1\
-ECHO ------------------
+ECHO ---------------
 SET "SDL_BINARIES="
 FOR /R %%I IN (pdcurses34\sdl1\*.c) DO (
 	ECHO Building %%~nI%%~xI
@@ -49,10 +49,10 @@ CMD /C emcc -O2 %SDL_BINARIES% -o lib\sdl1.o
 
 ECHO.
 ECHO BUILDING demos\
-ECHO ------------------
+ECHO ---------------
 FOR /R %%I IN (pdcurses34\demos\*.c) DO (
 	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 pdcurses34\demos\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\
+	CMD /C emcc -O2 pdcurses34\demos\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\ -I pdcurses34\demos\
 )	
 
 ECHO OFF
@@ -63,7 +63,7 @@ CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\xmas.bc -o b
 
 ECHO.
 ECHO Building SDLTEST demo
-ECHO ------------------
+ECHO ---------------------
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\sdltest.bc -o bin\sdltest.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO.
@@ -73,12 +73,12 @@ CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\worm.bc -o b
 
 ECHO.
 ECHO Building FIREWORK demo
-ECHO ------------------
+ECHO ----------------------
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\firework.bc -o bin\firework.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO.
 ECHO Building PTEST demo
-ECHO ------------------
+ECHO -------------------
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\ptest.bc -o bin\ptest.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO.
