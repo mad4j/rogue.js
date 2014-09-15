@@ -9,13 +9,16 @@ void PDC_beep(void)
     PDC_LOG(("PDC_beep() - called\n"));
 }
 
+//external definition
 void emscripten_sleep(int ms);
+
 void PDC_napms(int ms)
 {
     PDC_LOG(("PDC_napms() - called: ms=%d\n", ms));
 
     PDC_update_rects();
-    //SDL_Delay(ms);
+	
+	//SDL_Delay(ms);
     emscripten_sleep(ms);
 }
 

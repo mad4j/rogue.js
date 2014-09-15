@@ -13,6 +13,9 @@ MD lib\
 RD /Q /S bin\
 MD bin\
 
+ECHO Copy BMP files in bin\
+COPY *.bmp bin\
+
 ECHO.
 ECHO BUILDING pdcurses\
 ECHO ------------------
@@ -52,6 +55,11 @@ FOR /R %%I IN (pdcurses34\demos\*.c) DO (
 	CMD /C emcc -O2 pdcurses34\demos\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\
 )	
 
+ECHO OFF
+ECHO.
+ECHO Building XMAS demo
+ECHO ------------------
+CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\xmas.bc -o bin\xmas.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO.
 ECHO Building SDLTEST demo
@@ -59,11 +67,6 @@ ECHO ------------------
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\sdltest.bc -o bin\sdltest.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO.
-ECHO Building XMAS demo
-ECHO ------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\xmas.bc -o bin\xmas.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.s
 ECHO Building WORM demo
 ECHO ------------------
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\worm.bc -o bin\worm.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
