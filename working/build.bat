@@ -59,7 +59,9 @@ ECHO OFF
 ECHO.
 ECHO Building XMAS demo
 ECHO ------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\xmas.bc -o bin\xmas.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+CD bin/
+CMD /C emcc -s ASYNCIFY=1 --emrun -O2 ..\lib\pdcurses.o ..\lib\sdl1.o ..\out\xmas.bc -o xmas.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+CD ..
 
 ECHO.
 ECHO Building SDLTEST demo
