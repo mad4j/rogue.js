@@ -4,6 +4,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 CLS
 
+ECHO Removing folders
 RD /Q /S out\
 MD out\
 
@@ -28,24 +29,18 @@ FOR /R %%I IN (pdcurses34\pdcurses\*.c) DO (
 )	
 
 ECHO.
-ECHO Building library using...
-ECHO %PDCURSES_BINARIES%
-CMD /C emcc -O2 %PDCURSES_BINARIES% -o lib\pdcurses.o
-
-ECHO.
 ECHO BUILDING sdl1\
 ECHO ---------------
-SET "SDL_BINARIES="
 FOR /R %%I IN (pdcurses34\sdl1\*.c) DO (
 	ECHO Building %%~nI%%~xI
 	CMD /C emcc -O2 pdcurses34\sdl1\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\
-	SET "SDL_BINARIES=!SDL_BINARIES! out\%%~nI.bc"
+	SET "PDCURSES_BINARIES=!PDCURSES_BINARIES! out\%%~nI.bc"
 )
 
 ECHO.
 ECHO Building library using...
-ECHO %SDL_BINARIES%
-CMD /C emcc -O2 %SDL_BINARIES% -o lib\sdl1.o
+ECHO %PDCURSES_BINARIES%
+CMD /C emcc -O2 %PDCURSES_BINARIES% -o lib\pdcurses.o
 
 ECHO.
 ECHO BUILDING demos\
@@ -53,39 +48,9 @@ ECHO ---------------
 FOR /R %%I IN (pdcurses34\demos\*.c) DO (
 	ECHO Building %%~nI%%~xI
 	CMD /C emcc -O2 pdcurses34\demos\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\ -I pdcurses34\demos\
+	CD bin/
+	CMD /C emcc -s ASYNCIFY=1 --emrun -O2 ..\lib\pdcurses.o ..\out\%%~nI.bc -o %%~nI.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+	CD ..
 )	
 
-ECHO OFF
-ECHO.
-ECHO Building XMAS demo
-ECHO ------------------
-CD bin/
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 ..\lib\pdcurses.o ..\lib\sdl1.o ..\out\xmas.bc -o xmas.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-CD ..
-
-ECHO.
-ECHO Building SDLTEST demo
-ECHO ---------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\sdltest.bc -o bin\sdltest.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.
-ECHO Building WORM demo
-ECHO ------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\worm.bc -o bin\worm.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.
-ECHO Building FIREWORK demo
-ECHO ----------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\firework.bc -o bin\firework.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.
-ECHO Building PTEST demo
-ECHO -------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\ptest.bc -o bin\ptest.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.
-ECHO Building RAIN demo
-ECHO ------------------
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o lib\sdl1.o out\rain.bc -o bin\rain.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-echo FINISH
+echo FINISHED
