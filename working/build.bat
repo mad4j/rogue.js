@@ -53,4 +53,17 @@ FOR /R %%I IN (pdcurses34\demos\*.c) DO (
 	CD ..
 )	
 
-echo FINISHED
+ECHO.
+ECHO Building tbclock
+ECHO ---------------
+
+SET "TBCLOCK_BINARIES="
+FOR /R %%I IN (tbclock\*.c) DO (
+	ECHO Building %%~nI%%~xI
+	CMD /C emcc -O2 tbclock\%%~nI%%~xI -o out\%%~nI.bc -I tbclock\ -I pdcurses34\
+	SET "TBCLOCK_BINARIES=!TBCLOCK_BINARIES! out\%%~nI.bc"
+)	
+
+CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o %TBCLOCK_BINARIES% -o bin\tbclock.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+
+ECHO FINISHED

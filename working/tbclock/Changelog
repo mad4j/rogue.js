@@ -1,0 +1,45 @@
+tbclock-1.10
+ - fixed signedness in mod_clock for linux/ppc
+ - fixed display bug in small terms.
+ - resizing is now working
+ - you can change display mode on the fly with 'a' in "clock" and "chrono"
+ - command line color selection (-H, -M,...), thanks Olivier Regnier
+ - decimal help is now triggered with -e instead of -H.
+tbclock-1.9
+ - players/users can now display a decimal help in different form using
+   'h' key in 'clock' and 'chrono' or with -H on command line. 
+ - you can now review your answers in guessbin using 'r' at score table.
+tbclock-1.8
+ - dots appears on NUL bits (can be switched off with -b).
+ - added '-a' option to switch display style to vertical
+tbclock-1.7.1
+ - fixed bugs on linux-ppc
+ - fixed guessbin stopping at 2nd time
+tbclock-1.7
+ - time management in guessbin has been rewritten, it now works on
+   all systems at the same speed.
+ - renamed 'games' to 'modules', option -g is now -m
+ - added a new module: chrono which can counts tenth of seconds
+tbclock-1.6
+ - guessbin now has a time limit for answer, 
+ - a maximum of 20 question,
+ - a difficulty menu,
+ - and a final score page!
+tbclock-1.5
+ - Added support for a first game: 'guessbin'.
+ - Got a manpage.
+ - Switched to GNUmakefile for OS dependent reasons.
+tbclock-1.4
+ - Cursor is set invisible.
+tbclock-1.3
+ - You can disable frame and borders between blocks.
+ - Those options can be accessed via command line arguments.
+ - You can now use tbclock in transparent terminals.
+ - If terminal is too small, frame and borders are removed 
+   automagically.
+tbclock-1.2
+ - Should work on any terminal resolution above 8x5
+ - Should also work on monochrome terminals.
+ - Blocks will scale depending of the size of the terminal.
+ - Stop if the terminal is resized (to be fixed...)
+ - Reorganized functions.
