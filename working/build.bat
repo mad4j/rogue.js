@@ -54,8 +54,20 @@ FOR /R %%I IN (pdcurses34\demos\*.c) DO (
 )	
 
 ECHO.
+ECHO Building rogue36
+ECHO ----------------
+
+SET "ROGUE_BINARIES="
+FOR /R %%I IN (rogue36\*.c) DO (
+	ECHO Building %%~nI%%~xI
+	CMD /C emcc -O2 rogue36\%%~nI%%~xI -o out\%%~nI.bc -I rogue36\ -I pdcurses34\
+	SET "ROGUE_BINARIES=!ROGUE_BINARIES! out\%%~nI.bc"
+)	
+
+
+ECHO.
 ECHO Building tbclock
-ECHO ---------------
+ECHO ----------------
 
 SET "TBCLOCK_BINARIES="
 FOR /R %%I IN (tbclock\*.c) DO (
@@ -65,5 +77,11 @@ FOR /R %%I IN (tbclock\*.c) DO (
 )	
 
 CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o %TBCLOCK_BINARIES% -o bin\tbclock.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+
+ECHO.
+ECHO Building zsnake
+ECHO ---------------
+
+CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o zsnake\main.c zsnake\soviet.c -I zsnake\ -I pdcurses34\ -o bin\zsnake.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
 
 ECHO FINISHED
