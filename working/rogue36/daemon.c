@@ -105,7 +105,7 @@ int (*func)();
  *	passing the argument to the function.
  */
 
-do_daemons(flag)
+void do_daemons(flag)
 register int flag;
 {
     register struct delayed_action *dev;

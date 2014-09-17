@@ -25,7 +25,7 @@ static char msgbuf[BUFSIZ];
 static int newpos = 0;
 
 /*VARARGS1*/
-msg(char *fmt, ...)
+void msg(char *fmt, ...)
 {
     va_list ap;
     /*
@@ -50,7 +50,7 @@ msg(char *fmt, ...)
 /*
  * add things to the current message
  */
-addmsg(char *fmt, ...)
+void addmsg(char *fmt, ...)
 {
     va_list ap;
 
@@ -63,7 +63,7 @@ addmsg(char *fmt, ...)
  * Display a new msg (giving him a chance to see the previous one if it
  * is up there with the --More--)
  */
-endmsg()
+void endmsg()
 {
     strncpy(huh, msgbuf, 80);
     huh[79] = 0;

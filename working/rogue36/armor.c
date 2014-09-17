@@ -12,12 +12,29 @@
 #include "curses.h"
 #include "rogue.h"
 
+//io.c
+extern void addmsg(char *fmt, ...);
+extern void endmsg();
+extern void msg(char *fmt, ...);
+
+//things.c
+extern int dropcheck(struct object *op);
+
+//pack.cab
+char pack_char(struct object *obj);
+
+//daemon.c
+void do_daemons(int flag);
+void do_fuses(int flag);
+
+void waste_time();
+
 /*
  * wear:
  *	The player wants to wear something, so let him/her put it on.
  */
 
-wear()
+void wear()
 {
     register struct linked_list *item;
     register struct object *obj;
@@ -54,7 +71,7 @@ wear()
  *	Get the armor off of the players back
  */
 
-take_off()
+void take_off()
 {
     register struct object *obj;
 
@@ -81,7 +98,7 @@ take_off()
  *	Do nothing but let other things happen
  */
 
-waste_time()
+void waste_time()
 {
     do_daemons(BEFORE);
     do_fuses(BEFORE);

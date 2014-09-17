@@ -64,7 +64,6 @@ FOR /R %%I IN (rogue36\*.c) DO (
 	SET "ROGUE_BINARIES=!ROGUE_BINARIES! out\%%~nI.bc"
 )	
 
-
 ECHO.
 ECHO Building tbclock
 ECHO ----------------

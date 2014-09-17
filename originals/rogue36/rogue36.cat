@@ -1,0 +1,54 @@
+ROGUE(6)                                                              ROGUE(6)
+
+
+
+NAME
+       rogue - Exploring The Dungeons of Doom
+
+SYNOPSIS
+       rogue [ save_file ]
+
+DESCRIPTION
+       Rogue  is a computer fantasy game with a new twist.  It is crt oriented
+       and the object of the game is to survive the attacks  of  various  mon-
+       sters and get a lot of gold, rather than the puzzle solving orientation
+       of most computer fantasy games.
+
+       To get started you really only need to know two commands.  The  command
+       ?   will  give  you  a list of the available commands and the command /
+       will identify the things you see on the screen.
+
+       To win the game (as opposed to merely playing to beat other people high
+       scores)  you  must locate the Amulet of Yendor which is somewhere below
+       the 20th level of the dungeon and get it out.  Nobody has achieved this
+       yet  and  if  somebody does, they will probably go down in history as a
+       hero among heros.
+
+       When the game ends, either by your death, when you quit, or if you  (by
+       some  miracle)  manage to win, rogue will give you alist of the top-ten
+       scorers.  The scoring is based entirely upon how  much  gold  you  get.
+       There is a 10% penalty for getting yourself killed.
+
+       For more detailed directions, read the document A Guide to the Dungeons
+       of Doom.
+
+FILES
+       rogue36.scr                  Score file
+       ~/rogue36.sav                Default save file
+
+SEE ALSO
+       Michael C. Toy, A Guide to the Dungeons of Doom
+
+BUGS
+       Probably infinite.  Currently known bugs are: Sometimes you  are  still
+       hungry  even  after you eat food and sometimes you get a monster on the
+       screen in reverse video which may or may not cause a core dump.
+
+COPYRIGHT
+       Rogue: Exploring the Dungeons of Doom
+       Copyright (C) 1980, 1981 Michael Toy, Ken Arnold and Glenn Wichman
+       All rights reserved.
+
+
+
+3rd Berkeley Distribution                                             ROGUE(6)
