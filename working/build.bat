@@ -1,86 +1,58 @@
 @ECHO OFF
-
 SETLOCAL ENABLEDELAYEDEXPANSION
+
+SET EMCC_PARAMS=-s ASYNCIFY=1 --emrun
+SET EMCC_PRELOAD=--preload-file pdcfont.bmp --preload-file pdcicon.bmp
+SET GCC_PARAMS=-O2 -Wno-parentheses -Wno-implicit-int -Wno-return-type -Wno-implicit-function-declaration -Wno-format
 
 CLS
 
+ECHO.
+ECHO Building rogue.js
+
+ECHO.
 ECHO Removing folders
+
 RD /Q /S out\
 MD out\
 
-RD /Q /S lib\
-MD lib\
+RD /Q /S dist\
+MD dist\
 
-RD /Q /S bin\
-MD bin\
-
-ECHO Copy BMP files in bin\
-COPY *.bmp bin\
+ECHO Copy BMP files in dist\
+COPY *.bmp dist\
 
 ECHO.
-ECHO BUILDING pdcurses\
-ECHO ------------------
-
-SET "PDCURSES_BINARIES="
-FOR /R %%I IN (pdcurses34\pdcurses\*.c) DO (
-	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 pdcurses34\pdcurses\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\
-	SET "PDCURSES_BINARIES=!PDCURSES_BINARIES! out\%%~nI.bc"
-)	
+ECHO Building game using...
 
 ECHO.
-ECHO BUILDING sdl1\
-ECHO ---------------
-FOR /R %%I IN (pdcurses34\sdl1\*.c) DO (
+ECHO EMCC params...
+ECHO %EMCC_PARAMS%
+ECHO.
+ECHO EMCC preload files...
+ECHO %EMCC_PRELOAD%
+ECHO.
+ECHO GCC params...
+ECHO %GCC_PARAMS%
+
+ECHO.
+ECHO Compiling source files...
+
+SET "ROGUE_FILES="
+FOR /R %%I IN (rogue36\*.c) DO (
 	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 pdcurses34\sdl1\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\
-	SET "PDCURSES_BINARIES=!PDCURSES_BINARIES! out\%%~nI.bc"
+	CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% rogue36\%%~nI%%~xI -o out\%%~nI.bc -I rogue36\ -I curses.js\
+	SET "ROGUE_FILES=!ROGUE_FILES! out\%%~nI.bc"
 )
 
 ECHO.
-ECHO Building library using...
-ECHO %PDCURSES_BINARIES%
-CMD /C emcc -O2 %PDCURSES_BINARIES% -o lib\pdcurses.o
+ECHO Compiling binaries using...
+ECHO %ROGUE_FILES%
+CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% -o out\rogue.bc -I rogue36\ -I curses.js\
 
 ECHO.
-ECHO BUILDING demos\
-ECHO ---------------
-FOR /R %%I IN (pdcurses34\demos\*.c) DO (
-	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 pdcurses34\demos\%%~nI%%~xI -o out\%%~nI.bc -I pdcurses34\ -I pdcurses34\pdcurses\ -I pdcurses34\sdl1\ -I pdcurses34\demos\
-	CD bin/
-	CMD /C emcc -s ASYNCIFY=1 --emrun -O2 ..\lib\pdcurses.o ..\out\%%~nI.bc -o %%~nI.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-	CD ..
-)	
+ECHO Linking application...
+CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html
 
 ECHO.
-ECHO Building rogue36
-ECHO ----------------
-
-SET "ROGUE_BINARIES="
-FOR /R %%I IN (rogue36\*.c) DO (
-	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 rogue36\%%~nI%%~xI -o out\%%~nI.bc -I rogue36\ -I pdcurses34\
-	SET "ROGUE_BINARIES=!ROGUE_BINARIES! out\%%~nI.bc"
-)	
-
-ECHO.
-ECHO Building tbclock
-ECHO ----------------
-
-SET "TBCLOCK_BINARIES="
-FOR /R %%I IN (tbclock\*.c) DO (
-	ECHO Building %%~nI%%~xI
-	CMD /C emcc -O2 tbclock\%%~nI%%~xI -o out\%%~nI.bc -I tbclock\ -I pdcurses34\
-	SET "TBCLOCK_BINARIES=!TBCLOCK_BINARIES! out\%%~nI.bc"
-)	
-
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o %TBCLOCK_BINARIES% -o bin\tbclock.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
-ECHO.
-ECHO Building zsnake
-ECHO ---------------
-
-CMD /C emcc -s ASYNCIFY=1 --emrun -O2 lib\pdcurses.o zsnake\main.c zsnake\soviet.c -I zsnake\ -I pdcurses34\ -o bin\zsnake.html --preload-file pdcfont.bmp --preload-file pdcicon.bmp
-
 ECHO FINISHED

@@ -386,7 +386,7 @@ int type;
     return NULL;
 }
 
-char pack_char(obj)
+pack_char(obj)
 register struct object *obj;
 {
     register struct linked_list *item;

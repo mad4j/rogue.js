@@ -119,7 +119,7 @@ WINDOW *win;
     int ch;
 
     ch = md_readchar(win);
-
+	
     if ((ch == 3) || (ch == 0))
     {
 	quit(0);

@@ -20,7 +20,7 @@ coord ch_ret;				/* Where chasing takes you */
  *	Make all the running monsters move.
  */
 
-int runners()
+runners()
 {
     register struct linked_list *item;
     register struct thing *tp;

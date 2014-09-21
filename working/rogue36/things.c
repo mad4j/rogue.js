@@ -213,7 +213,7 @@ drop()
 /*
  * do special checks for dropping or unweilding|unwearing|unringing
  */
-int dropcheck(op)
+dropcheck(op)
 register struct object *op;
 {
     str_t save_max;

@@ -71,6 +71,10 @@ char *strdup(const char *s);
 
 #define MOD_MOVE(c) (toupper(c) )
 
+#ifdef EMSCRIPTEN
+#define _getch(x) getch(x)
+#endif
+
 void
 md_init()
 {
@@ -459,7 +463,7 @@ md_crypt(char *key, char *salt)
 char *
 md_getpass(char *prompt)
 {
-#ifdef _WIN32
+#if defined(_WIN32) || defined(EMSCRIPTEN)
     static char password_buffer[9];
     char *p = password_buffer;
     int c, count = 0;
@@ -556,7 +560,7 @@ md_ucount()
 {
 #ifdef __DJGPP__
     return(1);
-#elif defined(_WIN32)
+#elif defined(_WIN32) || defined(EMSCRIPTEN)
     return(1);
 #else
     struct utmpx *up=NULL;

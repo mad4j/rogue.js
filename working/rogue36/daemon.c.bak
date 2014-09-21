@@ -79,6 +79,8 @@ int (*func)(), arg, type;
         dev->d_arg = arg;
         dev->d_time = DAEMON;
     }
+	
+	printf("STARTED DAEMON %p\n",func);
 }
 
 /*
@@ -109,16 +111,21 @@ do_daemons(flag)
 register int flag;
 {
     register struct delayed_action *dev;
-
     /*
      * Loop through the devil list
      */
+	 
+	 printf("dlist %d\n", d_list);
     for (dev = d_list; dev <= &d_list[MAXDAEMONS-1]; dev++)
 	/*
 	 * Executing each one, giving it the proper arguments
 	 */
-	if (dev->d_type == flag && dev->d_time == DAEMON)
+	if (dev->d_type == flag && dev->d_time == DAEMON) {
+		printf("do %p\n", dev->d_func);
 	    (*dev->d_func)(dev->d_arg);
+	}
+		
+	printf("HERE\n");
 }
 
 /*
