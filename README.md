@@ -5,7 +5,7 @@ JavaScript porting of original Rogue source code using Emscripten.
 
 [Play!](http://mad4j.github.io/rogue.js/rogue.html)
 
-![Rogue](http://en.wikipedia.org/wiki/File:Rogue_Screen_Shot_CAR.PNG)
+![Rogue](in-game.png)
 
 ### TODO
 - [ ] Create GitHub project repository
