@@ -13,6 +13,11 @@
 #include "curses.h"
 #include "rogue.h"
 
+#ifdef EMSCRIPTEN
+#include <stdlib.h>
+#endif
+
+
 /*
  * do_passages:
  *	Draw all the passages on a level.

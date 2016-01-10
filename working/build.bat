@@ -1,9 +1,9 @@
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-SET EMCC_PARAMS=-s ASYNCIFY=1 --emrun
-SET EMCC_PRELOAD=--preload-file pdcfont.bmp --preload-file pdcicon.bmp
-SET GCC_PARAMS=-O2 -Wno-parentheses -Wno-implicit-int -Wno-return-type -Wno-implicit-function-declaration -Wno-format
+SET EMCC_PARAMS=-s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2 --emrun
+SET EMCC_PRELOAD=--use-preload-plugins --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+SET GCC_PARAMS=-O2
 
 CLS
 
@@ -39,20 +39,20 @@ ECHO.
 ECHO Compiling source files...
 
 SET "ROGUE_FILES="
-FOR /R %%I IN (rogue36\*.c) DO (
+FOR /R %%I IN (rogue5.4.4\*.c) DO (
 	ECHO Building %%~nI%%~xI
-	CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% rogue36\%%~nI%%~xI -o out\%%~nI.bc -I rogue36\ -I curses.js\
+	CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% rogue5.4.4\%%~nI%%~xI -o out\%%~nI.bc -I rogue5.4.4\ -I curses.js\
 	SET "ROGUE_FILES=!ROGUE_FILES! out\%%~nI.bc"
 )
 
 ECHO.
 ECHO Compiling binaries using...
 ECHO %ROGUE_FILES%
-CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% -o out\rogue.bc -I rogue36\ -I curses.js\
+CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% -o out\rogue.bc -I rogue5.4.4\ -I curses.js\
 
 ECHO.
 ECHO Linking application...
-CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html
+CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html --shell-file template.html
 
 ECHO.
 ECHO FINISHED
