@@ -19,8 +19,8 @@ MD out\
 RD /Q /S dist\
 MD dist\
 
-ECHO Copy BMP files in dist\
-COPY *.bmp dist\
+ECHO Copy BMP files from curses.js\
+COPY curses.js\*.bmp .\
 
 ECHO.
 ECHO Building game using...
