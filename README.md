@@ -5,17 +5,9 @@ JavaScript porting of original Rogue source code using Emscripten. [Play online!
 
 ![Rogue](in-game.png)
 
-### TODO
-- [ ] Create GitHub project repository
-- [ ] Porting of PDCurses
-- [ ] Porting of Rogue source code
-
-### Emscripten
-### PDCurses
-### Rogue
-
 ### References
-- [Roguelike Restoration](http://rogue.rogueforge.net/)
-- [Emscripten](https://github.com/kripken/emscripten/wiki)
-- [PDCurses](http://pdcurses.sourceforge.net/)
-- [PDCurses.js](https://github.com/coolwanglu/PDCurses.js)
+* [Rogue5.4](http://rogue.rogueforge.net/rogue-5-4/) original rogue source code
+* Emscripten](https://github.com/kripken/emscripten/wiki)
+* PDCurses
+* Curses.JS
+
