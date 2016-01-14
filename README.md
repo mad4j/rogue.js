@@ -1,4 +1,4 @@
-rogue.js
+Rogue.JS
 ========
 
 JavaScript porting of original Rogue source code using Emscripten.
