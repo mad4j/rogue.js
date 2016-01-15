@@ -123,7 +123,7 @@ main(int argc, char **argv, char **envp)
     init_names();			/* Set up names of scrolls */
     init_colors();			/* Set up colors of potions */
     init_stones();			/* Set up stone settings of rings */
-    init_materials();			/* Set up materials of wands */
+    init_materials();		/* Set up materials of wands */
     setup();
 
     /*

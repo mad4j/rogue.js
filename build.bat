@@ -2,7 +2,7 @@
 SETLOCAL ENABLEDELAYEDEXPANSION
 
 SET EMCC_PARAMS=-s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2 --emrun
-SET EMCC_PRELOAD=--use-preload-plugins --preload-file pdcfont.bmp --preload-file pdcicon.bmp
+SET EMCC_PRELOAD=--use-preload-plugins --preload-file curses.js/pdcfont.bmp@/ --preload-file curses.js/pdcicon.bmp@/
 SET GCC_PARAMS=-O2
 
 CLS
@@ -18,9 +18,6 @@ MD out\
 
 RD /Q /S dist\
 MD dist\
-
-ECHO Copy BMP files from curses.js\
-COPY curses.js\*.bmp .\
 
 ECHO.
 ECHO Building game using...
