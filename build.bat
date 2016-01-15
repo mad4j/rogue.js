@@ -49,7 +49,7 @@ CMD /C emcc %GCC_PARAMS% %ROGUE_FILES% -o out\rogue.bc -I rogue5.4.4\ -I curses.
 
 ECHO.
 ECHO Linking application...
-CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html --shell-file template.html
+CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html --shell-file rogue-template.html
 
 ECHO.
 ECHO FINISHED
