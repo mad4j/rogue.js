@@ -1,7 +1,7 @@
 Rogue.JS
 ========
 
-JavaScript porting of original Rogue source code using Emscripten. [Play online!](http://mad4j.github.io/rogue.js/rogue.html)
+JavaScript porting of original [Rogue](https://en.wikipedia.org/wiki/Rogue_(video_game)) source code using Emscripten. [Play online!](http://mad4j.github.io/rogue.js/rogue.html)
 
 ![Rogue](in-game.png)
 
