@@ -14,3 +14,9 @@ JavaScript porting of original [Rogue](https://en.wikipedia.org/wiki/Rogue_(vide
 * [Emscripten](https://github.com/kripken/emscripten/wiki) LLVM to JavaScript compiler
 * [Curses.JS](https://github.com/mad4j/curses.js) JavaScript port of [PDCurses](https://github.com/wmcbrine/PDCurses) 
 * [Misc](http://coredumpcentral.org/) all you need on Rogue
+
+
+# See also
+* https://github.com/donnierussellii/donnierussellii.github.io
+
+
