@@ -36,7 +36,7 @@
 #undef HAVE_SETREGID
 #define HAVE_GETPASS 1
 #define HAVE_GETPWUID 1
-#define HAVE_WORKING_FORK 1
+#undef HAVE_WORKING_FORK
 #define HAVE_ERASECHAR 1
 #define HAVE_KILLCHAR 1
 #elif defined(__DJGPP__)

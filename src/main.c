@@ -375,7 +375,9 @@ shell()
      * Fork and do a shell
      */
     md_shellescape();
-
+#ifdef EMSCRIPTEN
+    msg("[Press return to continue]");
+#endif
     printf("\n[Press return to continue]");
     fflush(stdout);
     noecho();
@@ -384,6 +386,9 @@ shell()
     playltchars();
     in_shell = FALSE;
     wait_for('\n');
+#ifdef EMSCRIPTEN
+    msg("");
+#endif    
     clearok(stdscr, TRUE);
 }
 
