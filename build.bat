@@ -52,4 +52,8 @@ ECHO Linking application...
 CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\rogue.bc -o dist\rogue.html --shell-file rogue-template.html
 
 ECHO.
+ECHO Removing intermediate files...
+RD /Q /S out\
+
+ECHO.
 ECHO FINISHED
