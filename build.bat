@@ -13,10 +13,10 @@ ECHO Building rogue.js
 ECHO.
 ECHO Removing folders
 
-RD /Q /S out\
+IF EXIST out\ RD /Q /S out\
 MD out\
 
-RD /Q /S dist\
+IF EXIST dist\ RD /Q /S dist\
 MD dist\
 
 ECHO.
@@ -53,7 +53,7 @@ CMD /C emcc %EMCC_PARAMS% %EMCC_PRELOAD% %GCC_PARAMS% curses.js\libcurses.o out\
 
 ECHO.
 ECHO Removing intermediate files...
-RD /Q /S out\
+IF EXIST out\ RD /Q /S out\
 
 ECHO.
 ECHO FINISHED
