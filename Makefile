@@ -18,6 +18,8 @@ LIBS = curses.js/libcurses.o $(LIB)
 all: $(EXE)
 	@echo "removing intermediate files ..."
 	@rm -fR out
+	@echo "copying media files ..."
+	@cp resources/fav* dist/
 
 $(EXE): $(LIB)
 	@mkdir -p dist/
