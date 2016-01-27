@@ -1,6 +1,5 @@
 
 SRC = $(wildcard src/*.c)
-OBJ = $(patsubst src/%.c,out/%.bc,$(SRC))
 
 LIB = out/rogue.bc
 EXE = dist/rogue.html
@@ -15,7 +14,8 @@ EMCC_TEMPLATE = --shell-file rogue-template.html
 INCLUDES = -I src/ -I curses.js/
 LIBS = curses.js/libcurses.o $(LIB)
 
-all: $(EXE)
+
+all: show $(EXE)
 	@echo "removing intermediate files ..."
 	@rm -fR out
 	@echo "copying media files ..."
@@ -26,15 +26,21 @@ $(EXE): $(LIB)
 	@echo "building $(EXE) ..."
 	@$(CC) $(EMCC_PARAMS) $(EMCC_PRELOAD) $(GCC_PARAMS) $(LIBS) -o $(EXE) $(EMCC_TEMPLATE)
 
-$(LIB): $(OBJ)
+$(LIB): $(SRC)
 	@mkdir -p out/
 	@echo "building $(LIB) ..."
-	@$(CC) $(GCC_PARAMS) $(OBJ) -o $(LIB) $(INCLUDES)
+	@$(CC) $(GCC_PARAMS) $(SRC) -o $(LIB) $(INCLUDES)
 
-out/%.bc: src/%.c
-	@mkdir -p out/
-	@echo "building $< ..."
-	@$(CC) $(GCC_PARAMS) $< -o $@ $(INCLUDES)
+show:
+	@echo 
+	@echo "Bulding Rogue.JS"
+	@echo "----------------"
+	@echo "using GCC params: $(GCC_PARAMS)"
+	@echo "using EMCC params: $(EMCC_PARAMS)"
+	@echo "using EMCC Preload params: $(EMCC_PRELOAD)"
+	@echo "using EMCC Template params: $(EMCC_TEMPLATE)"
+	@echo
 
 clean:
-	rm -fR dist/ out/
+	@echo "cleaning output folders..."
+	@rm -fR dist/ out/
