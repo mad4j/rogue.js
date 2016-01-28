@@ -6,7 +6,7 @@ EXE = dist/rogue.html
 
 CC = emcc
 
-GCC_PARAMS = -O2
+GCC_PARAMS = 
 EMCC_PARAMS = -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2 --emrun
 EMCC_PRELOAD = --use-preload-plugins --preload-file curses.js/pdcfont.bmp@/ --preload-file curses.js/pdcicon.bmp@/
 EMCC_TEMPLATE = --shell-file rogue-template.html
@@ -14,8 +14,13 @@ EMCC_TEMPLATE = --shell-file rogue-template.html
 INCLUDES = -I src/ -I curses.js/
 LIBS = curses.js/libcurses.o $(LIB)
 
+all: GCC_PARAMS += -O2
+all: dist
 
-all: show $(EXE)
+debug: GCC_PARAMS += -g4
+debug: dist
+
+dist: show $(EXE)
 	@echo "removing intermediate files ..."
 	@rm -fR out
 	@echo "copying media files ..."
@@ -29,7 +34,7 @@ $(EXE): $(LIB)
 $(LIB): $(SRC)
 	@mkdir -p out/
 	@echo "building $(LIB) ..."
-	@$(CC) $(GCC_PARAMS) $(SRC) -o $(LIB) $(INCLUDES)
+	@$(CC) $(GCC_PARAMS) $(EMCC_PRELOAD) $(SRC) -o $(LIB) $(INCLUDES)
 
 show:
 	@echo 
