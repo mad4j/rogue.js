@@ -39,6 +39,17 @@
 #undef HAVE_WORKING_FORK
 #define HAVE_ERASECHAR 1
 #define HAVE_KILLCHAR 1
+#undef SIGHUP
+#undef SIGQUIT
+#undef SIGILL
+#undef SIGTRAP
+#undef SIGIOT
+#undef SIGEMT
+#undef SIGFPE
+#undef SIGBUS
+#undef SIGSEGV
+#undef SIGSYS
+#undef SIGTERM 
 #elif defined(__DJGPP__)
 #define HAVE_SYS_TYPES_H 1
 #define HAVE_PROCESS_H 1
