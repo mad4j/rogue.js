@@ -44,12 +44,12 @@
 #undef MOUSE_MOVED
 #endif
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 #include <curses.h>
 #include "extern.h"
-
-#ifdef HAVE_GETGID
-    #error "NOT VALID"
-#endif
 
 #if defined(HAVE_SYS_TYPES)
 #include <sys/types.h>
@@ -369,7 +369,6 @@ void
 md_normaluser()
 {
 #if defined(HAVE_GETGID) && defined(HAVE_GETUID)
-    printf("XXX\n");
 	gid_t realgid = getgid();
 	uid_t realuid = getuid();
 
@@ -516,6 +515,8 @@ md_sleep(int s)
 {
 #ifdef _WIN32
     Sleep(s);
+#elif defined(EMSCRIPTEN)
+    emscripten_sleep(s);
 #else
     sleep(s);
 #endif
@@ -561,7 +562,7 @@ md_shellescape()
     sh = md_getshell();
 
     while((pid = fork()) < 0)
-        sleep(1);
+        md_sleep(1);
 
     if (pid == 0) /* Shell Process */
     {
