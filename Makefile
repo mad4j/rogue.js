@@ -7,12 +7,16 @@ DIST_FOLDER = dist
 
 SRC = $(wildcard $(SRC_FOLDER)/*.c)
 
-LIB = $(OUT_FOLDER)/rogue.bc
-EXE = $(DIST_FOLDER)/rogue.html
+VER=$(shell cat version.txt)
+BUILD=$(shell git log --oneline | wc -l)
+
+LIB = $(OUT_FOLDER)/roguejs.$(VER)-$(BUILD).bc
+EXE = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 
 CC = emcc
 
 GCC_PARAMS = 
+# -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1 --memory-init-file 1
 EMCC_PARAMS = -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2 --emrun
 EMCC_PRELOAD = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
 EMCC_TEMPLATE = --shell-file rogue-template.html
