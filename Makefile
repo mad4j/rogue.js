@@ -17,14 +17,14 @@ CC = emcc
 
 GCC_PARAMS = 
 # -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1 --memory-init-file 1
-EMCC_PARAMS = -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2 --emrun
+EMCC_PARAMS = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2
 EMCC_PRELOAD = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
 EMCC_TEMPLATE = --shell-file rogue-template.html
 
 INCLUDES = -I $(SRC_FOLDER)/ -I $(CUR_FOLDER)/
 LIBS = $(CUR_FOLDER)/libcurses.o $(LIB)
 
-all: GCC_PARAMS += -O2
+all: GCC_PARAMS += -O3 -Oz
 all: dist
 
 debug: GCC_PARAMS += -g4
@@ -55,6 +55,9 @@ show:
 	@echo "using EMCC Preload params: $(EMCC_PRELOAD)"
 	@echo "using EMCC Template params: $(EMCC_TEMPLATE)"
 	@echo
+
+run:
+	@emrun $(EXE)
 
 clean:
 	@echo "cleaning output folders..."
