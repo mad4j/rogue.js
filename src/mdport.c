@@ -423,6 +423,11 @@ md_getpid()
 char *
 md_getusername()
 {
+
+#if defined(EMSCRIPTEN)
+    return "user";
+#endif
+    
     static char login[80];
     char *l = NULL;
 #ifdef _WIN32
@@ -456,6 +461,11 @@ md_getusername()
 char *
 md_gethomedir()
 {
+
+#if defined(EMSCRIPTEN)
+    return "/";
+#endif
+
     static char homedir[PATH_MAX];
     char *h = NULL;
     size_t len;
