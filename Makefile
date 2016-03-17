@@ -1,27 +1,32 @@
 
-SRC_FOLDER = src
-OUT_FOLDER = out
-RES_FOLDER = resources
-CUR_FOLDER = curses.js
-DIST_FOLDER = dist
+SRC_FOLDER    = src
+OUT_FOLDER    = out
+RES_FOLDER    = resources
+CUR_FOLDER    = curses.js
+DIST_FOLDER   = dist
 
-SRC = $(wildcard $(SRC_FOLDER)/*.c)
+SRC           += $(wildcard $(SRC_FOLDER)/*.c)
+SRC-CURSES    += $(wildcard $(CUR_FOLDER)/pdcurses34/pdcurses/*.c)
+SRC-CURSES    += $(wildcard $(CUR_FOLDER)/pdcurses34/sdl1/*.c)
 
-VER=$(shell cat version.txt)
-BUILD=$(shell git log --oneline | wc -l)
+VER           = $(shell cat version.txt)
+BUILD         = $(shell git log --oneline | wc -l)
 
-LIB = $(OUT_FOLDER)/roguejs.$(VER)-$(BUILD).bc
-EXE = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
+LIB           = $(OUT_FOLDER)/roguejs.$(VER)-$(BUILD).bc
+LIB-CURSES    = $(OUT_FOLDER)/libcursesjs.bc
 
-CC = emcc
+EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 
-GCC_PARAMS = 
-EMCC_PARAMS = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2
-EMCC_PRELOAD = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
+CC            = emcc
+
+GCC_PARAMS    = 
+EMCC_PARAMS   = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2
+EMCC_PRELOAD  = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
 EMCC_TEMPLATE = --shell-file rogue-template.html
 
-INCLUDES = -I $(SRC_FOLDER)/ -I $(CUR_FOLDER)/
-LIBS = $(CUR_FOLDER)/libcurses.o $(LIB)
+INCLUDES      += -I $(SRC_FOLDER)/ 
+INCLUDES      += -I $(CUR_FOLDER)/pdcurses34
+
 
 all: GCC_PARAMS += -O3 -Oz
 all: dist
@@ -34,16 +39,22 @@ dist: show $(EXE)
 	@rm -fR $(OUT_FOLDER)/
 	@echo "copying media files ..."
 	@cp $(RES_FOLDER)/fav* $(DIST_FOLDER)/
+	@echo "...COMPLETED"
 
-$(EXE): $(LIB)
+$(EXE): $(LIB-CURSES) $(LIB)
 	@mkdir -p $(DIST_FOLDER)/
 	@echo "building $(EXE) ..."
-	@$(CC) $(EMCC_PARAMS) $(EMCC_PRELOAD) $(GCC_PARAMS) $(LIBS) -o $(EXE) $(EMCC_TEMPLATE)
+	@$(CC) $(EMCC_PARAMS) $(EMCC_PRELOAD) $(GCC_PARAMS) $(LIB) $(LIB-CURSES) -o $(EXE) $(EMCC_TEMPLATE)
 
 $(LIB): $(SRC)
 	@mkdir -p $(OUT_FOLDER)/
 	@echo "building $(LIB) ..."
 	@$(CC) $(GCC_PARAMS) $(EMCC_PRELOAD) $(SRC) -o $(LIB) $(INCLUDES)
+
+$(LIB-CURSES): $(SRC-CURSES)
+	@mkdir -p $(OUT_FOLDER)/
+	@echo "building $(LIB-CURSES) ..."
+	@$(CC) $(GCC_PARAMS) $(EMCC_PRELOAD) $(SRC-CURSES) -o $(LIB-CURSES) $(INCLUDES)
 
 show:
 	@echo 
