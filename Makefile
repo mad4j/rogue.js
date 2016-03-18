@@ -12,7 +12,7 @@ SRC-CURSES    += $(wildcard $(CUR_FOLDER)/pdcurses34/sdl1/*.c)
 VER           = $(shell cat version.txt)
 BUILD         = $(shell git log --oneline | wc -l)
 
-LIB           = $(OUT_FOLDER)/roguejs.$(VER)-$(BUILD).bc
+LIB           = $(OUT_FOLDER)/libroguejs.bc
 LIB-CURSES    = $(OUT_FOLDER)/libcursesjs.bc
 
 EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
@@ -20,7 +20,7 @@ EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 CC            = emcc
 
 GCC_PARAMS    = 
-EMCC_PARAMS   = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s ASSERTIONS=2
+EMCC_PARAMS   = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s EMULATED_FUNCTION_POINTERS=1 -s ASSERTIONS=2
 EMCC_PRELOAD  = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
 EMCC_TEMPLATE = --shell-file rogue-template.html
 
@@ -40,6 +40,7 @@ dist: show $(EXE)
 	@echo "copying media files ..."
 	@cp $(RES_FOLDER)/fav* $(DIST_FOLDER)/
 	@echo "...COMPLETED"
+	@echo -en "\007"
 
 $(EXE): $(LIB-CURSES) $(LIB)
 	@mkdir -p $(DIST_FOLDER)/
@@ -72,3 +73,4 @@ run:
 clean:
 	@echo "cleaning output folders..."
 	@rm -fR $(DIST_FOLDER)/ $(OUT_FOLDER)/
+	@echo "...COMPLETED"
