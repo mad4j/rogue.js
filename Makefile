@@ -20,9 +20,19 @@ EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 CC            = emcc
 
 GCC_PARAMS    = 
-EMCC_PARAMS   = --emrun -s ASYNCIFY=1 -s ALIASING_FUNCTION_POINTERS=0 -s EMULATE_FUNCTION_POINTER_CASTS=1 -s EMULATED_FUNCTION_POINTERS=1 -s ASSERTIONS=2
-EMCC_PRELOAD  = --use-preload-plugins --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
-EMCC_TEMPLATE = --shell-file rogue-template.html
+
+EMCC_PARAMS   += --emrun 
+EMCC_PARAMS   += -s ASYNCIFY=1 
+EMCC_PARAMS   += -s ALIASING_FUNCTION_POINTERS=0 
+EMCC_PARAMS   += -s EMULATE_FUNCTION_POINTER_CASTS=1 
+EMCC_PARAMS   += -s EMULATED_FUNCTION_POINTERS=1 
+EMCC_PARAMS   += -s ASSERTIONS=2
+
+EMCC_PRELOAD  += --use-preload-plugins 
+EMCC_PRELOAD  += --preload-file $(CUR_FOLDER)/pdcfont.bmp@/ 
+EMCC_PRELOAD  += --preload-file $(CUR_FOLDER)/pdcicon.bmp@/
+
+EMCC_TEMPLATE += --shell-file rogue-template.html
 
 INCLUDES      += -I $(SRC_FOLDER)/ 
 INCLUDES      += -I $(CUR_FOLDER)/pdcurses34
