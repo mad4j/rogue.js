@@ -56,27 +56,6 @@ static chtype oldch = (chtype)(-1);    /* current attribute */
 static int rectcount = 0;              /* index into uprect */
 static short foregr = -2, backgr = -2; /* current foreground, background */
 
-
-/* emscripten */
-#define SDL_SetPalette(a, b, c, d, e) XXX_SetPalette(a, b, c, d, e);
-
-int XXX_SetPalette(SDL_Surface *surface, int flags, SDL_Color *colors, int firstcolor, int ncolors)
-{	
-	unsigned int* p =(unsigned int*)surface->pixels;
-	unsigned char index = (firstcolor == 0) ? 0x00 : 0xFF;
-	
-	Uint32 color = SDL_MapRGB(pdc_screen->format, colors->r, colors->g, colors->b);
-	
-	SDL_LockSurface(surface);
-	for (unsigned int i=0; i<surface->w * surface->h; i++) {
-		if (pdc_font_indexes[i] == index) {
-			p[i] = color;
-		}
-	}
-	SDL_UnlockSurface(surface);
-	return 0;
-}
-
 /* do the real updates on a delay */
 
 void PDC_update_rects(void)
@@ -125,7 +104,6 @@ static void _set_attr(chtype ch)
         {
             SDL_SetPalette(pdc_font, SDL_LOGPAL, 
                            pdc_color + newfg, pdc_flastc, 1);
-						   
             foregr = newfg;
         }
 

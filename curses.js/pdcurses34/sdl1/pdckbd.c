@@ -1,7 +1,6 @@
 /* Public Domain Curses */
 
 #include "pdcsdl.h"
-#include <stdlib.h>
 
 RCSID("$Id: pdckbd.c,v 1.20 2008/07/14 04:24:52 wmcbrine Exp $")
 
@@ -22,6 +21,9 @@ RCSID("$Id: pdckbd.c,v 1.20 2008/07/14 04:24:52 wmcbrine Exp $")
 **man-end****************************************************************/
 
 #include <string.h>
+#ifdef EMSCRIPTEN
+#include <stdlib.h>
+#endif
 
 unsigned long pdc_key_modifiers = 0L;
 

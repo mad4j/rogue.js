@@ -25,8 +25,11 @@ void PDC_retile(void)
 {
     if (pdc_tileback)
         SDL_FreeSurface(pdc_tileback);
-
-    pdc_tileback = SDL_DisplayFormat(pdc_screen);
+#ifdef EMSCRIPTEN
+    pdc_tileback = SDL_DisplayFormatAlpha(pdc_screen);
+#else
+	pdc_tileback = SDL_DisplayFormat(pdc_screen);
+#endif
 
     if (pdc_back)
     {
@@ -103,16 +106,7 @@ int PDC_scr_open(int argc, char **argv)
         return ERR;
     }
 
-	SP->mono = !pdc_font->format->palette;
-	
-	pdc_font_indexes = (unsigned char*) malloc(pdc_font->w * pdc_font->h);
-	for (int i=0; i<pdc_font->w * pdc_font->h; i++) {
-		if (((unsigned int*)pdc_font->pixels)[i] == 0xFF000000) {
-			pdc_font_indexes[i] = 0x00;
-		} else {
-			pdc_font_indexes[i] = 0xFF;
-		}
-	}
+    SP->mono = !pdc_font->format->palette;
 
     if (!SP->mono && !pdc_back)
     {
@@ -176,7 +170,7 @@ int PDC_scr_open(int argc, char **argv)
 
     if (SP->orig_attr)
         PDC_retile();
-		
+
     for (i = 0; i < 8; i++)
     {
         pdc_color[i].r = (i & COLOR_RED) ? 0xc0 : 0;
@@ -290,7 +284,7 @@ int PDC_color_content(short color, short *red, short *green, short *blue)
 }
 
 int PDC_init_color(short color, short red, short green, short blue)
-{	
+{
     pdc_color[color].r = DIVROUND(red * 255, 1000);
     pdc_color[color].g = DIVROUND(green * 255, 1000);
     pdc_color[color].b = DIVROUND(blue * 255, 1000);
@@ -299,6 +293,6 @@ int PDC_init_color(short color, short red, short green, short blue)
                                    pdc_color[color].g, pdc_color[color].b);
 
     wrefresh(curscr);
-	
+
     return OK;
 }

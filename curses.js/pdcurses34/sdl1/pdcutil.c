@@ -4,22 +4,26 @@
 
 RCSID("$Id: pdcutil.c,v 1.6 2008/07/14 04:24:52 wmcbrine Exp $")
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 void PDC_beep(void)
 {
     PDC_LOG(("PDC_beep() - called\n"));
 }
-
-//external definition
-void emscripten_sleep(int ms);
 
 void PDC_napms(int ms)
 {
     PDC_LOG(("PDC_napms() - called: ms=%d\n", ms));
 
     PDC_update_rects();
-	
-	//SDL_Delay(ms);
+
+#ifdef EMSCRIPTEN
     emscripten_sleep(ms);
+#else
+	SDL_Delay(ms);
+#endif
 }
 
 const char *PDC_sysname(void)

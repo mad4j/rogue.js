@@ -5,7 +5,6 @@
 RCSID("$Id: pdcclip.c,v 1.6 2008/07/14 04:24:52 wmcbrine Exp $")
 
 #include <stdlib.h>
-#include <string.h>
 
 /*man-start**************************************************************
 
@@ -47,6 +46,9 @@ RCSID("$Id: pdcclip.c,v 1.6 2008/07/14 04:24:52 wmcbrine Exp $")
 **man-end****************************************************************/
 
 /* global clipboard contents, should be NULL if none set */
+#ifdef EMSCRIPTEN
+#include <string.h>
+#endif
 
 static char *pdc_SDL_clipboard = NULL;
 
