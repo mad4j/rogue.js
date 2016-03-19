@@ -1,3 +1,6 @@
+### Rogue.JS Building System
+### Daniele Olmisani <daniele.olmisani@gmail.com>
+
 
 SRC_FOLDER    = src
 OUT_FOLDER    = out
@@ -49,6 +52,7 @@ dist: show $(EXE)
 	@rm -fR $(OUT_FOLDER)/
 	@echo "copying media files ..."
 	@cp $(RES_FOLDER)/fav* $(DIST_FOLDER)/
+	@cp $(EXE) $(DIST_FOLDER)/index.html
 	@echo "...COMPLETED"
 	@echo -en "\007"
 
