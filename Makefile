@@ -22,10 +22,10 @@ EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 
 CC            = emcc
 
-GCC_PARAMS    = 
+OPT_PARAMS    = 
 
 EMCC_PARAMS   += --emrun 
-#EMCC_PARAMS   += --memory-init-file 1
+EMCC_PARAMS   += --memory-init-file 1
 EMCC_PARAMS   += -s EMTERPRETIFY=1 
 EMCC_PARAMS   += -s EMTERPRETIFY_ASYNC=1
 EMCC_PARAMS   += -s EMULATE_FUNCTION_POINTER_CASTS=1 
@@ -42,10 +42,10 @@ INCLUDES      += -I $(SRC_FOLDER)/
 INCLUDES      += -I $(CUR_FOLDER)/pdcurses34
 
 
-all: GCC_PARAMS += -O3 -Oz
+all: OPT_PARAMS += -O3 -Oz
 all: dist
 
-debug: GCC_PARAMS += -g -s SAFE_HEAP=1
+debug: OPT_PARAMS += -g -s SAFE_HEAP=1
 debug: dist
 
 dist: show $(EXE)
@@ -60,23 +60,23 @@ dist: show $(EXE)
 $(EXE): $(LIB-CURSES) $(LIB)
 	@mkdir -p $(DIST_FOLDER)/
 	@echo "building $(EXE) ..."
-	@$(CC) $(EMCC_PARAMS) $(EMCC_PRELOAD) $(GCC_PARAMS) $(LIB) $(LIB-CURSES) -o $(EXE) $(EMCC_TEMPLATE)
+	@$(CC) $(EMCC_PARAMS) $(EMCC_PRELOAD) $(OPT_PARAMS) $(LIB) $(LIB-CURSES) -o $(EXE) $(EMCC_TEMPLATE)
 
 $(LIB): $(SRC)
 	@mkdir -p $(OUT_FOLDER)/
 	@echo "building $(LIB) ..."
-	@$(CC) $(GCC_PARAMS) $(EMCC_PRELOAD) $(SRC) -o $(LIB) $(INCLUDES)
+	@$(CC) $(OPT_PARAMS) $(EMCC_PARAMS) $(SRC) -o $(LIB) $(INCLUDES)
 
 $(LIB-CURSES): $(SRC-CURSES)
 	@mkdir -p $(OUT_FOLDER)/
 	@echo "building $(LIB-CURSES) ..."
-	@$(CC) $(GCC_PARAMS) $(EMCC_PRELOAD) $(SRC-CURSES) -o $(LIB-CURSES) $(INCLUDES)
+	@$(CC) $(OPT_PARAMS) $(EMCC_PARAMS) $(SRC-CURSES) -o $(LIB-CURSES) $(INCLUDES)
 
 show:
 	@echo 
 	@echo "Bulding Rogue.JS"
 	@echo "----------------"
-	@echo "using GCC params: $(GCC_PARAMS)"
+	@echo "using optional params: $(OPT_PARAMS)"
 	@echo "using EMCC params: $(EMCC_PARAMS)"
 	@echo "using EMCC Preload params: $(EMCC_PRELOAD)"
 	@echo "using EMCC Template params: $(EMCC_TEMPLATE)"

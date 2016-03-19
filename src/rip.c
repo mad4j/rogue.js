@@ -100,7 +100,9 @@ score(int amount, int flags, char monst)
 	scp->sc_uid = RN;
     }
 
+#ifndef EMSCRIPTEN
     signal(SIGINT, SIG_DFL);
+#endif
 
 #ifdef MASTER
     if (wizard)
@@ -211,10 +213,14 @@ score(int amount, int flags, char monst)
     {
 	if (lock_sc())
 	{
+#ifndef EMSCRIPTEN
 	    fp = signal(SIGINT, SIG_IGN);
+#endif
 	    wr_score(top_ten);
 	    unlock_sc();
+#ifndef EMSCRIPTEN
 	    signal(SIGINT, fp);
+#endif
 	}
     }
 }
@@ -232,9 +238,13 @@ death(char monst)
     static time_t date;
     struct tm *localtime();
 
+#ifndef EMSCRIPTEN
     signal(SIGINT, SIG_IGN);
+#endif
     purse -= purse / 10;
+#ifndef EMSCRIPTEN
     signal(SIGINT, leave);
+#endif
     clear();
     killer = killname(monst, FALSE);
     if (!tombstone)
@@ -270,7 +280,9 @@ death(char monst)
     score(purse, amulet ? 3 : 0, monst);
     printf("[Press return to continue]");
     fflush(stdout);
+#ifndef EMSCRIPTEN
     (void) fgets(prbuf,10,stdin);
+#endif
     my_exit(0);
 }
 

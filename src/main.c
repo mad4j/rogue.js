@@ -377,8 +377,9 @@ shell()
     md_shellescape();
 #ifdef EMSCRIPTEN
     msg("[Press return to continue]");
-#endif
+#else
     printf("\n[Press return to continue]");
+#endif
     fflush(stdout);
     noecho();
     raw();
