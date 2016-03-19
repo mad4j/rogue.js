@@ -25,6 +25,7 @@ CC            = emcc
 GCC_PARAMS    = 
 
 EMCC_PARAMS   += --emrun 
+#EMCC_PARAMS   += --memory-init-file 1
 EMCC_PARAMS   += -s EMTERPRETIFY=1 
 EMCC_PARAMS   += -s EMTERPRETIFY_ASYNC=1
 EMCC_PARAMS   += -s EMULATE_FUNCTION_POINTER_CASTS=1 
@@ -44,7 +45,7 @@ INCLUDES      += -I $(CUR_FOLDER)/pdcurses34
 all: GCC_PARAMS += -O3 -Oz
 all: dist
 
-debug: GCC_PARAMS += -g4 -s SAFE_HEAP=1
+debug: GCC_PARAMS += -g -s SAFE_HEAP=1
 debug: dist
 
 dist: show $(EXE)
