@@ -15,6 +15,10 @@
 #include <curses.h>
 #include "rogue.h"
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif 
+
 /*
  * main:
  *	The main program, of course
@@ -24,6 +28,19 @@ main(int argc, char **argv, char **envp)
 {
     char *env;
     int lowtime;
+
+#ifdef EMSCRIPTEN
+
+    EM_ASM(
+        FS.mkdir('/data');
+        FS.mount(IDBFS, {}, '/data');
+
+        FS.syncfs(true, function (err) {
+            if (err) alert('Unable to mount /data file-system');
+        });
+    );
+
+#endif
 
     md_init();
 
