@@ -50,6 +50,7 @@
 #undef SIGSEGV
 #undef SIGSYS
 #undef SIGTERM 
+#define SCOREFILE "/data/rogue.scr"
 #elif defined(__DJGPP__)
 #define HAVE_SYS_TYPES_H 1
 #define HAVE_PROCESS_H 1
