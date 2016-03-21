@@ -22,7 +22,7 @@ EXE           = $(DIST_FOLDER)/roguejs.$(VER)-$(BUILD).html
 
 CC            = emcc
 
-OPT_PARAMS    = 
+OPT_PARAMS    = -DROGUEJS
 
 EMCC_PARAMS   += --emrun 
 EMCC_PARAMS   += --memory-init-file 1
@@ -89,3 +89,6 @@ clean:
 	@echo "cleaning output folders..."
 	@rm -fR $(DIST_FOLDER)/ $(OUT_FOLDER)/
 	@echo "...COMPLETED"
+
+.PHONY: all debug dist show run clean
+	
