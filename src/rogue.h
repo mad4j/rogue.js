@@ -12,6 +12,10 @@
 
 #include "extern.h"
 
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif 
+
 #undef lines 
 
 #define NOOP(x) (x += 0)
