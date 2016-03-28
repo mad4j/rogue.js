@@ -165,7 +165,7 @@ main(int argc, char **argv, char **envp)
 
 #ifdef ROGUEJS
     move(STATLINE, 0);
-    printw("Player name: ");
+    printw("Rogue's Name? ");
     get_str(whoami, stdscr);
 #endif
 
