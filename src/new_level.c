@@ -99,8 +99,10 @@ new_level()
 	visuals();
 
 #ifdef ROGUEJS
-    move(0, 0);
-    printw("Welcome %s!", whoami);
+    if (level == 1) {
+    	move(0, 0);
+    	printw("Welcome %s!", whoami);
+    }
 #endif
 
 }
