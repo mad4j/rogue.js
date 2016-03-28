@@ -162,6 +162,13 @@ main(int argc, char **argv, char **envp)
 #ifdef MASTER
     noscore = wizard;
 #endif
+
+#ifdef ROGUEJS
+    move(STATLINE, 0);
+    printw("Player name: ");
+    get_str(whoami, stdscr);
+#endif
+
     new_level();			/* Draw current level */
     /*
      * Start up daemons and fuses

@@ -97,6 +97,12 @@ new_level()
 	turn_see(FALSE);
     if (on(player, ISHALU))
 	visuals();
+
+#ifdef ROGUEJS
+    move(0, 0);
+    printw("Welcome %s!", whoami);
+#endif
+
 }
 
 /*
